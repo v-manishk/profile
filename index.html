@@ -826,8 +826,21 @@
             <a href="https://www.instagram.com/v_manishk/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         </div>
         <p style="color: var(--text-muted);">
-            © 2024 Manishkumar Vishwakarma. All rights reserved.
+            © 2024 <span id="adminAccess" style="cursor: pointer; transition: color 0.3s ease;">Manishkumar Vishwakarma</span>. All rights reserved.
         </p>
+        
+        <!-- Admin Modal -->
+        <div id="adminModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--glass-bg); backdrop-filter: blur(20px); padding: 2.5rem; border-radius: 20px; border: 1px solid var(--glass-border); min-width: 350px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+                <h3 style="color: var(--accent-color); margin-bottom: 2rem; font-size: 1.5rem;">🔐 Admin Access</h3>
+                <input type="password" id="adminPassword" placeholder="Enter password" style="width: 100%; padding: 1rem; background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); border-radius: 10px; color: white; margin-bottom: 1.5rem; font-size: 1rem; text-align: center;">
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 1rem;">
+                    <button id="adminSubmit" style="padding: 1rem 2rem; background: var(--gradient); color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: bold; transition: all 0.3s ease;">Access</button>
+                    <button id="adminCancel" style="padding: 1rem 2rem; background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--glass-border); border-radius: 10px; cursor: pointer; font-size: 1rem; transition: all 0.3s ease;">Cancel</button>
+                </div>
+                <div id="adminError" style="color: #ff6b6b; font-size: 0.9rem; display: none;">❌ Incorrect password. Try again!</div>
+            </div>
+        </div>
     </footer>
 
     <script>
@@ -993,6 +1006,170 @@
                     link.classList.add('active');
                 }
             });
+        });
+        
+        // Admin Access Panel - Complete JavaScript Code
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get DOM elements
+            const adminAccess = document.getElementById('adminAccess');
+            const adminModal = document.getElementById('adminModal');
+            const adminPassword = document.getElementById('adminPassword');
+            const adminSubmit = document.getElementById('adminSubmit');
+            const adminCancel = document.getElementById('adminCancel');
+            const adminError = document.getElementById('adminError');
+            
+            // Hidden credentials (Base64 encoded for security)
+            const hiddenPassword = atob('Yk9uZDM1cEFJcjc5'); // Decodes to: "manish..open"
+            const hiddenUrl = 'https://docs.google.com/spreadsheets/d/14imkheg9iKJejFuZ0l7vHLMW3rhkZ7wdxyEJVRCMFjs/edit?gid=0#gid=0'; // Change this to your actual admin URL
+            
+            // Show modal when name is clicked
+            adminAccess.addEventListener('click', function(e) {
+                e.preventDefault(); // Prevent any default behavior
+                adminModal.style.display = 'block';
+                adminPassword.focus(); // Auto-focus password field
+                adminError.style.display = 'none'; // Hide any previous errors
+                adminPassword.value = ''; // Clear password field
+                
+                // Optional: Add fade-in animation
+                adminModal.style.opacity = '0';
+                setTimeout(() => {
+                    adminModal.style.opacity = '1';
+                }, 10);
+            });
+            
+            // Hide modal function
+            function hideModal() {
+                adminModal.style.display = 'none';
+                adminPassword.value = '';
+                adminError.style.display = 'none';
+            }
+            
+            // Cancel button click handler
+            adminCancel.addEventListener('click', function(e) {
+                e.preventDefault();
+                hideModal();
+            });
+            
+            // Click outside modal to close
+            adminModal.addEventListener('click', function(e) {
+                // Only close if clicking the backdrop (not the modal content)
+                if (e.target === adminModal) {
+                    hideModal();
+                }
+            });
+            
+            // Password validation and redirect function
+            function checkPassword() {
+                const enteredPassword = adminPassword.value.trim();
+                
+                if (enteredPassword === '') {
+                    // Empty password
+                    adminError.textContent = '⚠️ Please enter a password';
+                    adminError.style.display = 'block';
+                    adminPassword.focus();
+                    
+                } else if (enteredPassword === hiddenPassword) {
+                    // Correct password
+                    hideModal();
+                    
+                    // Show success message briefly (optional)
+                    const successMsg = document.createElement('div');
+                    successMsg.textContent = '✅ Access granted! Redirecting...';
+                    successMsg.style.cssText = `
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: linear-gradient(135deg, #667eea, #764ba2);
+                        color: white;
+                        padding: 1rem 2rem;
+                        border-radius: 10px;
+                        z-index: 10001;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                    `;
+                    document.body.appendChild(successMsg);
+                    
+                    // Remove success message and redirect
+                    setTimeout(() => {
+                        document.body.removeChild(successMsg);
+                        // Open URL in new tab
+                        window.open(hiddenUrl, '_blank');
+                    }, 1000);
+                    
+                } else {
+                    // Wrong password
+                    adminError.textContent = '❌ Incorrect password. Try again!';
+                    adminError.style.display = 'block';
+                    adminPassword.value = '';
+                    adminPassword.focus();
+                    
+                    // Add shake animation
+                    adminPassword.style.animation = 'shake 0.5s ease-in-out';
+                    setTimeout(() => {
+                        adminPassword.style.animation = '';
+                    }, 500);
+                }
+            }
+            
+            // Submit button click handler
+            adminSubmit.addEventListener('click', function(e) {
+                e.preventDefault();
+                checkPassword();
+            });
+            
+            // Enter key press handler
+            adminPassword.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    checkPassword();
+                }
+            });
+            
+            // Clear error when user starts typing
+            adminPassword.addEventListener('input', function() {
+                adminError.style.display = 'none';
+            });
+            
+            // Escape key to close modal
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && adminModal.style.display === 'block') {
+                    hideModal();
+                }
+            });
+            
+            // Optional: Add double-click protection
+            let clickTimeout;
+            adminAccess.addEventListener('click', function() {
+                clearTimeout(clickTimeout);
+                clickTimeout = setTimeout(() => {
+                    // Single click action already handled above
+                }, 300);
+            });
+            
+            // Optional: Add hover effect
+            adminAccess.addEventListener('mouseenter', function() {
+                this.style.color = '#f093fb';
+                this.style.textShadow = '0 0 10px rgba(240, 147, 251, 0.5)';
+            });
+            
+            adminAccess.addEventListener('mouseleave', function() {
+                this.style.color = '';
+                this.style.textShadow = '';
+            });
+        });
+
+        // Optional: Additional security - Clear sensitive data on page unload
+        window.addEventListener('beforeunload', function() {
+            // Clear any stored password values
+            const passwordField = document.getElementById('adminPassword');
+            if (passwordField) {
+                passwordField.value = '';
+            }
+        });
+
+        // Optional: Disable right-click on admin access element (basic protection)
+        document.getElementById('adminAccess')?.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
         });
     </script>
 
