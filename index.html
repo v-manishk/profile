@@ -2,296 +2,1096 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ManishKumar Vishwakarma</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
-    
+    <title>Manishkumar Vishwakarma - Full Stack Developer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --dark-bg: #0a0a0a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-light: #ffffff;
+            --text-muted: #b0b0b0;
+            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 50%, #667eea22 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, #764ba222 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, #f093fb22 0%, transparent 50%);
+            animation: backgroundMove 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundMove {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 0;
+            backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.7);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 0 2rem;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-description {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            filter: grayscale(20%);
+            transition: filter 0.3s ease;
+        }
+
+        .about-image:hover img {
+            filter: grayscale(0%);
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-10px);
+        }
+
+        .skill-category h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .skill-tag {
+            background: rgba(102, 126, 234, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        /* Experience Section */
+        .experience-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 2rem;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .experience-title {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-company {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .experience-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .experience-achievements {
+            list-style: none;
+        }
+
+        .experience-achievements li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        .experience-achievements li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-image {
+            height: 200px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .project-description {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            padding: 0.5rem 1rem;
+            background: rgba(102, 126, 234, 0.2);
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 25px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .project-link:hover {
+            background: rgba(102, 126, 234, 0.3);
+            color: white;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            width: 30px;
+        }
+
+        .contact-form {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(0, 0, 0, 0.8);
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--glass-bg);
+            color: var(--accent-color);
+            border-radius: 50%;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--glass-border);
+        }
+
+        .social-links a:hover {
+            background: var(--gradient);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .experience-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 4rem 1rem;
+            }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1001;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: var(--gradient);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+    </style>
 </head>
 <body>
-    <div class="scroll-up-btn">
-        <i class="fa fa-angle-up"></i>
+    <div class="bg-animation"></div>
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
     </div>
+
+    <!-- Navigation -->
     <nav class="navbar">
-        <div class="max-width">
-            <div class="logo"><a href="#">Portfo<span>lio.</span></a></div>
-            <ul class="menu">
+        <div class="nav-container">
+            <div class="logo">Portfolio.</div>
+            <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#services">Hands on</a></li>
+                <li><a href="#experience">Experience</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <div class="menu-btn">
-                <i class="fa fa-bars">
-
-                </i>
-            </div>
         </div>
     </nav>
 
-    <!-- home section start -->
-    <section class="home" id="home">
-        <div class="max-width">
-            <div class="home-content">
-                <div class="text-1">Hello, this is</div>
-                <div class="text-2">ManishKumar Vishwakarma</div>
-                <div class="text-3">And I'm a Computer Engineering Graduate 2023</div>
-                <div class="text-4">Currently Working on MEAN Stack</div>
-                <a href="#contact">Get in touch!</a>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-subtitle">Hello, I'm</div>
+            <h1 class="hero-title">Manishkumar Vishwakarma</h1>
+            <p class="hero-description">Full Stack Developer & IoT Specialist</p>
+            <a href="#contact" class="cta-button">Let's Connect</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section fade-in" id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+            <div class="about-image">
+                <div style="width: 300px; height: 300px; background: var(--gradient); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 4rem; color: white;">
+                    <!-- <i class="fas fa-user"></i> -->
+                    <img src="https://media.licdn.com/dms/image/v2/D4D03AQGMIHtC2X7_HQ/profile-displayphoto-shrink_800_800/B4DZRLW.hRG4Ac-/0/1736431103068?e=1756944000&v=beta&t=w-uVrRcIUxRyml0LdVZTBjBtY_Y8Ifsr2anKDR7IWBM" alt="Profile Picture">
+                </div>
+            </div>
+            <div class="about-text">
+                <h3>Computer Engineer & Full Stack Developer</h3>
+                <p>Results-driven Full Stack Developer with a strong background in backend development for IoT-based applications. I have experience leading backend teams in production development, designing and implementing high-performance APIs to process IoT device data.</p>
+                <p>I'm passionate about exploring emerging technologies, driving innovation, and solving complex architectural challenges to build scalable and efficient systems. Currently working as a Software Developer at UtopiaTech Pvt. Ltd.</p>
+                <!-- <a href="#" class="cta-button">Download CV</a> -->
             </div>
         </div>
     </section>
 
-    <!-- about section start -->
-    <section class="about" id="about">
-        <div class="max-width">
-            <h2 class="title">About me</h2>
-            <div class="about-content">
-                <div class="column left">
-                    <img src="image/manish.jpeg" alt="">
+    <!-- Experience Section -->
+    <section class="section fade-in" id="experience">
+        <h2 class="section-title">Professional Experience</h2>
+        <div class="experience-card">
+            <div class="experience-header">
+                <div>
+                    <h3 class="experience-title">Software Developer</h3>
+                    <div class="experience-company">UtopiaTech Pvt. Ltd</div>
                 </div>
-                <div class="column right">
-                    <div class="text">I'm ManishKumar and I'm a <span>Computer Engineer</span></div>
-                    <p>As a recent BE graduate in Computer Engineering, I aim to continuously enhance my technical expertise by learning new programming languages and frameworks, while applying my creativity and problemsolving skills to develop robust and user-friendly software solutions.
-                        With a focus on continuous learning and personal growth.
-                        </p>
-                    <a href="CV/ManishKumar_Vishwakarma.pdf" download>Download CV</a>
-                </div>
+                <div class="experience-date">August 2023 – Present</div>
             </div>
+            <ul class="experience-achievements">
+                <li>Developed Scalable and Dynamic APIs for real-time data retrieval, updates, reporting, and dashboard visualization, enabling seamless IoT device data access across multiple databases</li>
+                <li>Engineered a Rule-Based Alert System with flexible alert mechanisms allowing users to set rules on devices or users, triggering automated actions like email/SMS notifications</li>
+                <li>Optimized IoT Workflow with Node-RED by modifying open-source code to support multi-instance deployments, enabling scalable automation workflows</li>
+                <li>Built a Microservice for IoT Device Communication to facilitate reliable data exchange between devices and servers</li>
+                <li>Automated Deployment and Dynamic Schema Creation, implementing runtime schema generation for flexible data structuring</li>
+                <li>Mentored Team and Led Knowledge Sharing, providing technical guidance on best coding practices and training teammates</li>
+            </ul>
         </div>
     </section>
 
-    <!-- service section start -->
-    <section class="services" id="services">
-        <div class="max-width">
-            <h2 class="title">Hands on</h2>
-            <div class="serv-content">
-                <div class="card">
-                    <div class="box">
-                        <i class="fa fa-paint-brush"></i>
-                        <div class="text">Web Design</div>
-                        <p>I can design innovative, effective and responsive websites that capture your brand, improve your conversion rates, and maximize your revenue to help grow your business and achieve your goals.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="box">
-                        <i class="fa fa-code"></i>
-                        <div class="text">Apps Design</div>
-                        <p>I mostly create apps which have simple UI design and a strong backend security for android devices using android studio and for developing these apps I prefer Java and XML language. </p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="box">
-                        <i class="fa fa-database"></i>
-                        <div class="text">Information security</div>
-                        <p>I have a basic level of knowledge about Information security but have keen interest in applying it wherever its possible. I have developed few apps which are mainly focused on security.</p>
-                    </div>
+    <!-- Skills Section -->
+    <section class="section fade-in" id="skills">
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3><i class="fas fa-code"></i> Languages</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">TypeScript</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">C</span>
+                    <span class="skill-tag">C++</span>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- skills section start -->
-    
-    <section class="skills" id="skills">
-        <div class="max-width">
-            <h2 class="title">My skills</h2>
-            <div class="skills-content">
-                <div class="column left">
-                    <div class="text">My Skills & Knowledge.</div>
-                    <p>These few are skills and knowledge that I have gain in my engineering student and as through working professional tenure. I'm looking forward to enhance these skill and also learn new emerging tools and languages. I'm also exploring the new and efficient technologies...</p>
-                    <!-- <a href="#">Read more</a> -->
+            <div class="skill-category">
+                <h3><i class="fas fa-server"></i> Backend</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Express.js</span>
+                    <span class="skill-tag">Mongoose</span>
+                    <span class="skill-tag">RESTful APIs</span>
                 </div>
-                <div class="column right" style="padding-left: 25px; padding-right: 25px;">
-                    <div class="bars">
-                        <div class="info">
-                            <span>Java</span>
-                        </div>
-                        <div class="line c"></div>
-                    </div>
-                    <div class="bars">
-                        <div class="info">
-                            <span>C & C++</span>
-                        </div>
-                        <div class="line cpp"></div>
-                    </div>
-                    <div class="bars">
-                        <div class="info">
-                            <span>Data Structure</span>
-                        </div>
-                        <div class="line java"></div>
-                    </div>
-                    <div class="bars">
-                        <div class="info">
-                            <span>OOP'S</span>
-                        </div>
-                        <div class="line html"></div>
-                    </div>
-                    <div class="bars">
-                        <div class="info">
-                            <span>PHP</span>
-                        </div>
-                        <div class="line php"></div>
-                    </div>
-                    <div class="bars">
-                        <div class="info">
-                            <span>Application Development</span>
-                        </div>
-                        <div class="line css"></div>
-                    </div>
-                    <div class="bars">
-                        <div class="info">
-                            <span>Web Development</span>
-                        </div>
-                        <div class="line js"></div>
-                    </div>
-                    <div class="bars">
-                        <div class="info">
-                            <span>Information Security (Basic)</span>
-                        </div>
-                        <div class="line python"></div>
-                    </div>
-                    <!-- <div class="bars">
-                        <div class="info">
-                            <span>MySQL</span>
-                            <span>70%</span>
-                        </div>
-                        <div class="line mysql"></div>
-                    </div> -->
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-paint-brush"></i> Frontend</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">Angular</span>
+                    <span class="skill-tag">HTML5</span>
+                    <span class="skill-tag">CSS3</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-database"></i> Databases</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">InfluxDB</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">Firebase</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-tools"></i> Tools & Others</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">Kafka</span>
+                    <span class="skill-tag">RabbitMQ</span>
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">Node-RED</span>
+                    <span class="skill-tag">AWS</span>
+                    <span class="skill-tag">JWT</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-mobile-alt"></i> Mobile & Security</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Android Studio</span>
+                    <span class="skill-tag">Information Security</span>
+                    <span class="skill-tag">AES Encryption</span>
+                    <span class="skill-tag">IoT Systems</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- projects section starting -->
-    <section class="projects" id="projects">
-        <class class="max-width">
-            <h2 class="title">My Projects</h2>
-            <div class="carousel owl-carousel">
-                <div class="card" style="border-bottom: 3px solid red;">
-                    <div class="box">
-                        <img src="image/project1.jpg" alt="">
-                        <div class="text">Login Details Security | <a href="https://github.com/v-manishk/LoginDetailsSecurity" style="color: white; text-decoration: underline;">Github</a></div>
-                        <p>It was a android application written in java language and designed using XML and for database I have used firebase.It is used to store login credential of different website in encrypted form in the database and whenever he wants he can retrive the credentials. This application helps user to organize their login credentials of different which helps them not to worry about forgeting the password.</p>
-                    </div>
+    <!-- Projects Section -->
+    <section class="section fade-in" id="projects">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-mobile-alt"></i>
                 </div>
-                <div class="card" style="border-bottom: 3px solid red;">
-                    <div class="box">
-                        <img src="image/photofactory.png" alt="">
-                        <div class="text">PhotoFactory | <a href="https://github.com/v-manishk/photo-factory" style="color: white; text-decoration: underline;">Github</a></div>
-                        <p>It is a web application and MERN(MongoDB, Express, React, Nodejs) stack is used to develop this website. This website is used to store the images on the basis of different categories. It had two parts the user who has logged in into the website can upload images into the website so that user can see his created image and the user which is not logged in into the website can only view those images.</p>
-                    </div>
-                </div>
-                <div class="card" style="border-bottom: 3px solid red;">
-                    <div class="box">
-                        <img src="image/notes.jpg" alt="">
-                        <div class="text">Notes & ToDo | <a href="https://github.com/v-manishk/notes-todolist" style="color: white; text-decoration: underline;">Github</a> | <a href="https://github.com/v-manishk/notes-todolist/blob/main/Notes%26ToDoList.apk" style="color: white; text-decoration: underline;">App</a> </div>
-                        <p>Notes & ToDo is a android app developed using java, xml and firebase in android studio. This application is used to store the notes but here the notes are encrypted and then stored in the database it gives user a extra security as nobody can read his nites until he is logged into the app. It also had ToDo list part where user can put reminders of their task and this app will notify them about it.</p>
-                    </div>
-                </div>
-                <div class="card" style="border-bottom: 3px solid red;">
-                    <div class="box">
-                        <img src="image/jobportal.png" alt="">
-                        <div class="text">JobPortal Buddy | <a href="https://github.com/v-manishk/online_job_portal" style="color: white; text-decoration: underline;">Github</a></div>
-                        <p>It is a web application developed using technologies like Node JS, Handlebars, and mongoDB. In this website a user which is logged can post the job and also can see all the jobs posted by the recruiters and can apply to those job directly from the website. It had all the CRUD operations for posting job. This website had very minimalist design so that it would become easy for users to navigate.</p>
-                    </div>
-                </div>
-                <div class="card" style="border-bottom: 3px solid red;">
-                    <div class="box">
-                        <img src="image/vaccinationdesk.png" alt="">
-                        <div class="text">Vaccination Desk | <a href="https://github.com/v-manishk/vaccination-desk-code" style="color: white; text-decoration: underline;">Github</a>  | <a href="https://github.com/v-manishk/vaccination-desk/blob/main/Vaccination%20Desk.apk" style="color: white; text-decoration: underline;">App</a></div>
-                        <p>Vaccination Desk is an cunsultancy outhouse project which was deloped to keep vaccination and the medical record and it's certificates and in addition it also provide the information regarding the vaccinations. It also helps the doctors to keep vaccination track of it's patient. User can get the sms and app notification for the vaccintion i.e. it constantly remind you for the due vaccination according to the birth date as added while registration. One can also book the appointment with the doctor one day prior and the get the acknowledgment of the same in for of pdf.</p>
+                <div class="project-content">
+                    <h3 class="project-title">Vaccination Desk App</h3>
+                    <p class="project-description">Android mobile application for booking vaccination appointments, integrated with Google Authentication and Firebase. Features SMS and push notifications with 40% increased user retention.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link">GitHub</a>
+                        <a href="#" class="project-link">Download APK</a>
                     </div>
                 </div>
             </div>
-        </class>
-    </section>
 
-    
-    <!-- contact section start -->
-    <section class="contact" id="contact">
-        <div class="max-width">
-            <h2 class="title">Contact me</h2>
-            <div class="contact-content">
-                <div class="column left">
-                    <div class="text">Get in Touch</div>
-                    <p>From here you can contact me for any info and collabarative project. If you want to work with me or want me to work for you, on your any insteresting and new idea then you are on the right place.</p>
-                    <div class="icons">
-                        <div class="row">
-                            <i class="fa fa-user"></i>
-                            <div class="info">
-                                <div class="head">Name</div>
-                                <div class="sub-title">Manish Kumar Vishwakarma</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <i class="fa fa-map-marker"></i>
-                            <div class="info">
-                                <div class="head">Address</div>
-                                <div class="sub-title">Mumbai, Maharashtra, India</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <i class="fa fa-envelope"></i>
-                            <div class="info">
-                                <div class="head">Email</div>
-                                <div class="sub-title">vmanish1313@gmail.com</div>
-                            </div>
-                        </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-images"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">PhotoFactory</h3>
+                    <p class="project-description">Secure, user-friendly web platform for photo sharing and categorization built with Angular and Firebase. Implements JWT authentication for secure access and data protection.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link">GitHub</a>
+                        <a href="#" class="project-link">Live Demo</a>
                     </div>
                 </div>
-                <div class="column right">
-                    <div class="text">Message me</div>
-                    <form action="https://formsubmit.co/mkvmark42@gmail.com" method="POST">
-                        <div class="fields">
-                            <div class="field name">
-                                <input type="text" name="name" placeholder="Name" required>
-                            </div>
-                            <div class="field email">
-                                <input type="email" name="email" placeholder="Email" required>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <input type="text" name="_subject" placeholder="Subject" required>
-                        </div>
-                        <div class="field textarea">
-                            <textarea cols="30" name="text" rows="10" placeholder="Message.." required></textarea>
-                        </div>
-                        <div class="button">
-                            <button type="submit">Send message</button>
-                        </div>
-                    </form>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Secure Notes & Login Details Security</h3>
+                    <p class="project-description">Encrypted note-taking and credential storage apps using AES encryption. Allows users to securely sync notes across devices with improved security by 50%.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link">GitHub</a>
+                        <a href="#" class="project-link">Download APK</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">JobPortal Buddy</h3>
+                    <p class="project-description">Web application developed using Node.js, Handlebars, and MongoDB. Features job posting, searching, and direct application functionality with CRUD operations and minimalist design.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link">GitHub</a>
+                        <a href="#" class="project-link">Live Demo</a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- footer section start -->
-    <footer>
-        <a href="https://www.linkedin.com/in/vmanishk/" class="fa1 fa fa-linkedin" style="background-color: white; border-radius: 50%;"></a> 
-        <a href="https://www.instagram.com/v_manishk/?hl=en" class="fa1 fa fa-instagram" style="background-color: white; border-radius: 50%;"></a> 
-        <a href="https://twitter.com/v_manishk" class="fa1 fa fa-twitter" style="background-color: white; border-radius: 50%;"></a> 
-        <a href="https://github.com/v-manishk" class="fa1 fa fa-github" style="background-color: white; border-radius: 50%;"></a> 
-        <br>
-        <span>Created By <a href="#">v_manishk</a> | <span class="fa fa-copyright"></span> 2021 All rights reserved.</span>
+    <!-- Contact Section -->
+    <section class="section fade-in" id="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3 style="color: var(--accent-color); margin-bottom: 2rem;">Let's Connect</h3>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">I'm always open to discussing new opportunities, interesting projects, and collaborative ventures. Feel free to reach out!</p>
+                
+                <div class="contact-item">
+                    <i class="fas fa-user"></i>
+                    <div>
+                        <strong>Name</strong><br>
+                        <span style="color: var(--text-muted);">Manish Kumar Vishwakarma</span>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Location</strong><br>
+                        <span style="color: var(--text-muted);">Mumbai, Maharashtra, India</span>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>Email</strong><br>
+                        <span style="color: var(--text-muted);">Available upon request</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <h3 style="color: var(--accent-color); margin-bottom: 2rem;">Send a Message</h3>
+                <form action="https://formsubmit.co/mkvmark42@gmail.com" method="POST">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="_subject" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="5" name="message" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/vmanishk/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://github.com/v-manishk" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://x.com/v_manishk" aria-label="X"><i class="fab fa-x"></i></a>
+            <a href="https://www.instagram.com/v_manishk/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+        <p style="color: var(--text-muted);">
+            © 2024 Manishkumar Vishwakarma. All rights reserved.
+        </p>
     </footer>
 
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
 
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
 
-    <script src="javascript/script.js"></script>
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(0, 0, 0, 0.9)';
+            } else {
+                navbar.style.background = 'rgba(0, 0, 0, 0.7)';
+            }
+        });
+
+        // Form submission - Remove the custom handler since we're using FormSubmit
+        // The form will now submit directly to FormSubmit service
+
+        // Add typing effect to hero title
+        const heroTitle = document.querySelector('.hero-title');
+        const text = heroTitle.textContent;
+        heroTitle.textContent = '';
+        
+        let i = 0;
+        const typeWriter = () => {
+            if (i < text.length) {
+                heroTitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        };
+        
+        // Start typing effect after page load
+        window.addEventListener('load', () => {
+            setTimeout(typeWriter, 1000);
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const rate = scrolled * -0.5;
+            hero.style.transform = `translateY(${rate}px)`;
+        });
+
+        // Add hover effects to project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) rotateX(5deg)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) rotateX(0)';
+            });
+        });
+
+        // Add interactive particles (simple version)
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.width = '4px';
+            particle.style.height = '4px';
+            particle.style.background = 'rgba(102, 126, 234, 0.6)';
+            particle.style.borderRadius = '50%';
+            particle.style.pointerEvents = 'none';
+            particle.style.zIndex = '1';
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.top = Math.random() * window.innerHeight + 'px';
+            
+            document.body.appendChild(particle);
+            
+            // Animate particle
+            let opacity = 1;
+            let yPos = parseInt(particle.style.top);
+            
+            const animate = () => {
+                opacity -= 0.01;
+                yPos -= 1;
+                
+                particle.style.opacity = opacity;
+                particle.style.top = yPos + 'px';
+                
+                if (opacity <= 0) {
+                    particle.remove();
+                } else {
+                    requestAnimationFrame(animate);
+                }
+            };
+            
+            animate();
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 2000);
+
+        // Mobile menu toggle (for responsive design)
+        const menuBtn = document.querySelector('.menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (menuBtn) {
+            menuBtn.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        // Add active class to current section in navigation
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section, .hero');
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+    <style>
+        /* Additional mobile responsive styles */
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-description {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .project-card,
+            .skill-category,
+            .experience-card,
+            .contact-info,
+            .contact-form {
+                margin: 1rem 0;
+            }
+            
+            .nav-container {
+                padding: 0 1rem;
+            }
+        }
+
+        /* Active navigation link */
+        .nav-menu a.active {
+            color: var(--accent-color);
+        }
+
+        .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        /* Enhanced button hover effects */
+        .cta-button,
+        .submit-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before,
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before,
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Enhanced project card animations */
+        .project-card {
+            transform-style: preserve-3d;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Loading animation */
+        .loading {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .loading:nth-child(1) { animation-delay: 0.1s; }
+        .loading:nth-child(2) { animation-delay: 0.2s; }
+        .loading:nth-child(3) { animation-delay: 0.3s; }
+        .loading:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Glowing effects */
+        .skill-tag:hover,
+        .project-link:hover {
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+    </style>
 </body>
 </html>
-
-
-<!-- background: url("https://images.unsplash.com/photo-1600256397076-f9eb8e55afe6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=889&q=80") no-repeat center; -->
